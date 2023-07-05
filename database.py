@@ -13,7 +13,6 @@ CREATE_WATCHLIST_TABLE = """CREATE TABLE IF NOT EXISTS watched (
     title TEXT
 );"""
 
-
 INSERT_MOVIES = "INSERT INTO movies (title, release_timestamp, watched) VALUES (?, ?);"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
