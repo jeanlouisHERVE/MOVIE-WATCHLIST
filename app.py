@@ -22,14 +22,21 @@ def prompt_add_movie():
     release_date = input("Release date (dd-mm-YYYY): ")
     parsed_date = datetime.datetime.strptime(release_date, "%d-%m-%Y")
     timestamp = parsed_date.timestamp()
-    
     database.add_movie(title, timestamp)
+    
+    
+def print_movie_list(movies):
+    print("---upcoming movies---")
+    for movie in movies:
+        print(f"{movie[0]} (on {movie[1]})")
+    print("----\n")
 
 while (user_input := input(menu)) != "6":
     if user_input == "1":
         prompt_add_movie()
     elif user_input == "2":
-        pass
+        movies = database.get_movies(True)
+        print_movie_list(movies)
     elif user_input == "3":
         pass
     elif user_input == "4":
