@@ -20,7 +20,6 @@ SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
 SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE watcher_name = ?;"
 INSERT_WATCHED_MOVIES = "INSERT INTO movies (watcher_name, title) VALUES (?, ?);"
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
-
 DELETE_MOVIE = "DELETE FROM movies WHERE title = ?;"
 
 
@@ -45,13 +44,13 @@ def get_movies(upcoming=False):
             cursor.execute(SELECT_ALL_MOVIES)
         return cursor.fetchall()
 
-def watch_movie(title):
+def watch_movie(username, title):
     with connection:
-        cursor = connection.cursor()
-        cursor.execute(SET_MOVIE_WATCHED, (title, ))
+        connection.execute(DELETE_MOVIE, (title, ))
+        connection.execute(INSERT_WATCHED_MOVIES, (username, title))
         
-def get_watched_movies():
+def get_watched_movies(username):
     with connection:
         cursor = connection.cursor()
-        cursor.execute(SELECT_WATCHED_MOVIES)
+        cursor.execute(SELECT_WATCHED_MOVIES, (username,))
         return cursor.fetchall()
