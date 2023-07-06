@@ -25,7 +25,7 @@ DELETE_MOVIE = "DELETE FROM movies WHERE title = ?;"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
 SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE watcher_name = ?;"
-INSERT_WATCHED_MOVIES = "INSERT INTO movies (watcher_name, title) VALUES (?, ?);"
+INSERT_WATCHED_MOVIES = "INSERT INTO movies (user_username, movie_id) VALUES (?, ?);"
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
 
 connection = sqlite3.connect("movie_data.db")
@@ -53,10 +53,10 @@ def get_movies(upcoming=False):
             cursor.execute(SELECT_ALL_MOVIES)
         return cursor.fetchall()
 
-def watch_movie(username, title):
+def watch_movie(username, movie_id):
     with connection:
         connection.execute(DELETE_MOVIE, (title, ))
-        connection.execute(INSERT_WATCHED_MOVIES, (username, title))
+        connection.execute(INSERT_WATCHED_MOVIES, (username, movie_id))
         
 def get_watched_movies(username):
     with connection:
