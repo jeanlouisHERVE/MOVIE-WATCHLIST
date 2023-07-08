@@ -30,7 +30,7 @@ JOIN watched ON movie .id = watched_movie_id
 JOIN users ON users.username = watched.user_username
 WHERE users.username= ?;"""
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
-SEARCH_MOVIES = "SELECT * FROM movies WHERE title ?;"
+SEARCH_MOVIES = "SELECT * FROM movies WHERE title = ?;"
 DELETE_MOVIE = "DELETE FROM movies WHERE title = ?;"
 
 connection = sqlite3.connect("movie_data.db")
