@@ -26,7 +26,7 @@ INSERT_WATCHED_MOVIES = "INSERT INTO watched (user_username, movie_id) VALUES (?
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
 SELECT_WATCHED_MOVIES = """SELECT movies.* FROM movies
-JOIN watched ON movie .id = watched_movie_id
+JOIN watched ON movies.id = watched.movie_id
 JOIN users ON users.username = watched.user_username
 WHERE users.username= ?;"""
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
@@ -73,5 +73,5 @@ def watch_movie(username, movie_id):
 def get_watched_movies(username):
     with connection:
         cursor = connection.cursor()
-        cursor.execute(SELECT_WATCHED_MOVIES, (username,))
+        cursor.execute(SELECT_WATCHED_MOVIES, (username, ))
         return cursor.fetchall()
